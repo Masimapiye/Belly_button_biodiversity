@@ -29,6 +29,9 @@ function DemoInfo(patients) {
       var filteredMetadata = metadata.filter(metaID => metaID.id == patients)[0];
       console.log(filteredMetadata)
 
+      // Use `.html("") to clear any existing metadata
+    DemoInfoBox.html("");
+
       Object.entries(filteredMetadata)
       .forEach(([key, value]) => {
         DemoInfoBox.append("p")
@@ -40,6 +43,14 @@ function DemoInfo(patients) {
 }
 
 DemoInfo()
+
+//Function to change patient data
+function optionChanged(patients) {
+  buildPlots(patients);
+  DemoInfo(patients)
+}
+
+
 
 // Build function to build plots for patients
 function buildPlots(patients) {
@@ -129,38 +140,37 @@ Plotly.newPlot('bubble', bubble_data, bubble_layout)
 
 var wfreq = filteredMetadata.wfreq
 
+
+
 var gauge_data = [
   {
     domain: { x: [0, 1], y: [0, 1] },
-    value: wfreq,
-    title: { text: "Belly Button Washing Frequency (Scrubs per week)" },
-    type: "indicator",
-    mode: "gauge+number",
-    gauge: {
-      axis: { range: [null, 9] },
-      steps: [
-        { range: [0, 3], color: 'rgb(253, 162, 73)' },
-        { range: [3, 6], color: 'rgb(242, 113, 102)' },
-        { range: [6, 9], color: 'rgb(166, 77, 104)' },
-      ],
-      threshold: {
-        line: { color: "red", width: 4 },
-        thickness: 0.75,
-        value: 490
-      }
-    }
-  }
+				value: wfreq,
+				title: {text: '<b>Belly Button Washing Frequency</b> <br> Scrubs per week'},
+				type: "indicator",
+				mode: "gauge+number",
+				gauge: {
+					axis: { range: [null, 9] },
+					steps: [
+						{ range: [0, 1], color: 'rgb(248, 243, 236)' },
+						{ range: [1, 2], color: 'rgb(244, 241, 229)' },
+						{ range: [2, 3], color: 'rgb(233, 230, 202)' },
+						{ range: [3, 4], color: 'rgb(229, 231, 179)' },
+						{ range: [4, 5], color: 'rgb(213, 228, 157)' },
+						{ range: [5, 6], color: 'rgb(183, 204, 146)' },
+						{ range: [6, 7], color: 'rgb(140, 191, 136)' },
+						{ range: [7, 8], color: 'rgb(138, 187, 143)' },
+						{ range: [8, 9], color: 'rgb(133, 180, 138)' },
+					],
+				}
+			}
+		
+		
+	
+  
 ];
 
 var gauge_layout = { width: 600, height: 450, margin: { t: 0, b: 0 } };
 Plotly.newPlot('gauge', gauge_data, gauge_layout);
 });
-}
-
-
-
-
-function changeSubjectID(sampleIDs) {
-  buildPlots(sampleIDs);
-  populateDemoInfo(sampleIDs);
 }
