@@ -42,7 +42,7 @@ function DemoInfo(patients) {
   })
 }
 
-DemoInfo()
+//DemoInfo()
 
 //Function to change patient data
 function optionChanged(patients) {
